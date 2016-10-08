@@ -1,0 +1,6 @@
+.DS_Store
+.vagrant
+*.box
+registry-data/*
+!registry-data/Readme.md
+!.gitignore
