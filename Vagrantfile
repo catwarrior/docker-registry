@@ -12,5 +12,6 @@ Vagrant.configure("2") do |config|
             v.memory = 1024
             v.cpus = 2
         end
+        node.vm.provision "shell", path: "start.sh"
     end
 end
