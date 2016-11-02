@@ -14,8 +14,8 @@ services:
   proxy:
     image: registry:2.2
     volumes: 
-      - ./:/var/lib/registry
-    command: /var/lib/registry/config.proxy.yml
+      - ../:/var/lib/registry
+    command: /var/lib/registry/registry/config.proxy.yml
     ports: 
       - "5000:5000"
     restart: always
