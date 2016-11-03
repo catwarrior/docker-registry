@@ -1,5 +1,5 @@
 #!/bin/sh
 
-cd registry
+cd share/registry
 docker-compose up -d
-docker-compose logs -f --tail="200"
+docker-compose logs -f --tail="0"
