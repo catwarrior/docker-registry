@@ -1,5 +1,16 @@
 version: '2'
 services:
+  frontend:
+    image: konradkleine/docker-registry-frontend:v2
+    links:
+      - private:registry
+    ports:
+      - "8080:80"
+    environment:
+      - ENV_DOCKER_REGISTRY_HOST=registry
+      - ENV_DOCKER_REGISTRY_PORT=5100
+      - ENV_MODE_BROWSE_ONLY=true
+      
   proxy:
     image: registry:2.2
     volumes: 
@@ -7,14 +18,24 @@ services:
     command: /var/lib/registry/config.proxy.yml
     ports: 
       - "5000:5000"
+    restart: always
 
   private:
     image: registry:2.2
     volumes: 
-      - ./:/var/lib/registry
-    command: /var/lib/registry/config.private.yml
+      - ./auth:/auth
+      - ./certs:/certs
+      - ./registry-data:/var/lib/registry
+    #command: /var/lib/registry/config.private.yml
+    environment: 
+      - REGISTRY_HTTP_TLS_CERTIFICATE=/certs/domain.crt
+      - REGISTRY_HTTP_TLS_KEY=/certs/domain.key
+      - REGISTRY_AUTH=htpasswd
+      - REGISTRY_AUTH_HTPASSWD_REALM="Registry Realm"
+      - REGISTRY_AUTH_HTPASSWD_PATH=/auth/htpasswd
     ports: 
       - "5100:5000"
+    restart: always
 
   nexus:
     image: sonatype/nexus3:3.0.2
@@ -22,6 +43,7 @@ services:
       - "nexus-data:/nexus-data"
     ports: 
       - "8081:8081"
+    restart: always
 
 volumes:
   nexus-data: {}
