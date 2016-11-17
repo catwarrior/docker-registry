@@ -1,0 +1,8 @@
+version: '2'
+
+services:
+  proxy:
+    image: zhenkyle/docker-sslocal
+    ports: 
+      - "1984:1984"
+    command: "-b 0.0.0.0 -s hk02-49.ssv7.net -p 19583 -l 1984 -k Es5pF5QcGbhq -m aes-256-cfb"

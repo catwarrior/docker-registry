@@ -1,7 +1,7 @@
 .DS_Store
 .vagrant
 *.box
-registry/registry-data/*
+registry-data/*
 !registry/registry-data/private/Readme.md
 !registry/registry-data/proxy/Readme.md
 !.gitignore
