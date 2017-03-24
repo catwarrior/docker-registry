@@ -1,0 +1,25 @@
+version: '2'
+services:
+  gogs:
+    image: gogs/gogs
+    restart: 'always'
+    links:
+      - mysql
+    ports:
+      - "233:22"
+      - "3000:3000"
+  mysql:
+    image: mariadb:10.1
+    restart: 'always'
+    volumes:
+      - 'gogsData:/gogsData'
+    expose:
+      - "3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: gogs
+      MYSQL_DATABASE: gogs
+      MYSQL_USER: gogs
+      MYSQL_PASSWORD: gogs
+
+volumes:
+  gogsData: {}
